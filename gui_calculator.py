@@ -55,13 +55,21 @@ class f_GUI_Calculator:
 
     def f_calculate_result(f_self):
         f_expression = f_self.display.get()
+        f_expression = f_self.f_prepare_expression(f_expression)
         try:
-            f_result = eval(f_expression, {'__builtins__': None}, {'Calculator': Calculator, 'calc': f_self.calc})
+            f_result = eval(f_expression)
             f_self.f_clear_display()
             f_self.display.insert(tk.END, str(f_result))
         except Exception as f_error:
             f_self.f_clear_display()
             f_self.display.insert(tk.END, 'Error')
+
+    def f_prepare_expression(f_self, f_expression):
+        f_expression = f_expression.replace('+', 'f_self.calc.f_add')
+        f_expression = f_expression.replace('-', 'f_self.calc.f_subtract')
+        f_expression = f_expression.replace('*', 'f_self.calc.f_multiply')
+        f_expression = f_expression.replace('/', 'f_self.calc.f_divide')
+        return f_expression
 
     def f_run(f_self):
         f_self.main_window.mainloop()
