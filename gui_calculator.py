@@ -35,7 +35,33 @@ class f_GUI_Calculator:
         f_self.display.grid(row=1, column=0, sticky='nsew', padx=5, pady=5)
 
     def f_button_clicked(f_self, f_value):
-        print(f_value)  # Placeholder for button click handling
+        if f_value in '0123456789':
+            f_self.f_append_display(f_value)
+        elif f_value == 'C':
+            f_self.f_clear_display()
+        elif f_value in '+-*/':
+            f_self.f_append_operator(f_value)
+        elif f_value == '=':
+            f_self.f_calculate_result()
+
+    def f_append_display(f_self, f_value):
+        f_self.display.insert(tk.END, f_value)
+
+    def f_clear_display(f_self):
+        f_self.display.delete(0, tk.END)
+
+    def f_append_operator(f_self, f_operator):
+        f_self.display.insert(tk.END, f_operator)
+
+    def f_calculate_result(f_self):
+        f_expression = f_self.display.get()
+        try:
+            f_result = eval(f_expression, {'__builtins__': None}, {'Calculator': Calculator, 'calc': f_self.calc})
+            f_self.f_clear_display()
+            f_self.display.insert(tk.END, str(f_result))
+        except Exception as f_error:
+            f_self.f_clear_display()
+            f_self.display.insert(tk.END, 'Error')
 
     def f_run(f_self):
         f_self.main_window.mainloop()
