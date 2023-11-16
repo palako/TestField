@@ -1,6 +1,7 @@
 import tkinter as tk
 from calculator import Calculator
 
+
 class f_GUI_Calculator:
     def __init__(f_self):
         f_self.calc = Calculator()
@@ -23,7 +24,7 @@ class f_GUI_Calculator:
         f_self.buttons = {}
         for f_index, f_text in enumerate(f_self.button_texts):
             f_command = lambda f_text=f_text: f_self.f_button_clicked(f_text)
-            f_self.buttons[f_text] = tk.Button(f_self.buttons_frame, text=f_text, command=f_command)
+            f_self.buttons[f_text] = tk.Button(f_self.buttons_frame, text=f_text, command=f_command, bg='orange')
             f_row, f_col = divmod(f_index, 4)
             f_self.buttons[f_text].grid(row=f_row, column=f_col, sticky='nsew', padx=2, pady=2)
 
@@ -65,6 +66,7 @@ class f_GUI_Calculator:
 
     def f_run(f_self):
         f_self.main_window.mainloop()
+
 
 if __name__ == '__main__':
     f_gui_calc = f_GUI_Calculator()
