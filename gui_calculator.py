@@ -25,7 +25,10 @@ class f_GUI_Calculator:
         f_self.buttons = {}
         for f_index, f_text in enumerate(f_self.button_texts):
             f_command = lambda f_text=f_text: f_self.f_button_clicked(f_text)
-            f_self.buttons[f_text] = tk.Button(f_self.buttons_frame, text=f_text, command=f_command, bg='orange')
+            f_self.buttons[f_text] = tk.Button(f_self.buttons_frame, text=f_text, command=f_command, bg='orange', relief='flat')
+            f_self.buttons[f_text].configure(highlightbackground='black', highlightthickness=1)
+            f_self.buttons[f_text].configure(width=8, height=3)
+            f_self.f_make_button_circular(f_self.buttons[f_text])
             f_row, f_col = divmod(f_index, 4)
             f_self.buttons[f_text].grid(row=f_row, column=f_col, sticky='nsew', padx=2, pady=2)
 
@@ -35,6 +38,12 @@ class f_GUI_Calculator:
 
         f_self.display = tk.Entry(f_self.main_window, justify='right')
         f_self.display.grid(row=1, column=0, sticky='nsew', padx=5, pady=5)
+
+    def f_make_button_circular(f_self, f_button):
+        f_button_shape = tk.Canvas(f_self.buttons_frame, width=68, height=48, bg='orange', bd=0, highlightthickness=0)
+        f_button_shape.create_oval(2, 2, 66, 46, fill='orange', outline='black')
+        f_button_shape.grid_propagate(False)
+        f_button_shape.create_window(34, 24, window=f_button)
 
     def f_button_clicked(f_self, f_value):
         if f_value in '0123456789':
